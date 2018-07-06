@@ -1,0 +1,617 @@
+\documentclass[14pt,a4paper%,draft
+]{extarticle}
+\usepackage{cmap}
+%\usepackage{pdfsync}
+
+\usepackage[T2A]{fontenc}
+%\usepackage[cp1251]{inputenc}
+%\usepackage[english,russian]{babel}
+%
+%\usepackage{polyglossia}   %% загружает пакет многоязыковой вёрстки
+%\setdefaultlanguage[spelling=modern,babelshorthands=true]{russian}  %% устанавливает главный язык документа
+%\setotherlanguage{english} %% объявляет второй язык документа
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Если раскомментировать следующие строки
+% и сохранить в Unicode, то можно подключать системные шрифты
+% и копилировать LuaLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+
+
+%\usepackage{fontspec}      %% подготавливает загрузку шрифтов Open Type, True Type и др.
+%\defaultfontfeatures{Ligatures={TeX},Renderer=Basic}  %% свойства шрифтов по умолчанию
+%
+%\setmainfont%[Ligatures={TeX}]
+%{Times New Roman}%{CMU Serif} %% задаёт основной шрифт документа
+%\setsansfont%{Microsoft Sans Serif}%
+%{DejaVu Sans Mono}%{CMU Sans Serif}                    %% задаёт шрифт без засечек
+%%\setmonofont%{DejaVu Sans Mono}%
+%%{Verdana}%{CMU Typewriter Text}       
+
+\usepackage[english,main=russian]{babel}   %% загружает пакет многоязыковой вёрстки
+
+%%%%%%%%%%%%%%%%%%
+% Макет страницы
+%%%%%%%%%%%%%%%%%%
+\usepackage[a4paper,pdftex,dvips,nofoot,verbose,includehead,
+	   %topmargin=0pt,
+            headheight=17pt,headsep=10mm,%top=20mm,
+            text={170mm,247mm},bottom=20mm,%%,
+            %left=20mm,right=20mm%,twosideshift=2.5mm
+]{geometry}
+
+%%%%%%%%%%%%%%%%%%
+% Заголовки разделов
+%%%%%%%%%%%%%%%%%%
+\renewcommand{\thesubsubsection}{(\roman{subsubsection})}
+
+\usepackage{titlesec}
+\titleformat{\section}[hang]{\normalfont\large\raggedright}{\bfseries\thesection.}{.5em}{\bfseries}
+\titlespacing{\section}{0pt}{12pt plus 6pt}{3pt}%{\wordsep}
+\titleformat{\subsection}[runin]{\normalfont}{\bfseries\thesubsection.}{.5em}{\bfseries}[.\quad]
+\titleformat{\subsubsection}[runin]{\normalfont}{\bfseries{{\thesubsubsection}}}{.5em}{\bfseries}[.\quad]
+\titlespacing{\subsubsection}{0pt}{0pt}{3pt}
+\makeatletter
+\renewcommand\l@section{\@dottedtocline{1}{0ex}{2em}}
+%%\def\@seccntformat#1{\csname the#1\endcsname.\quad}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%
+% Колонтитулы
+%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\cfoot{}
+\lhead[\fancyplain{}{}]{\fancyplain{}{}}
+%\chead[\fancyplain{}{\thepage}]{\fancyplain{}{\thepage}}
+\rhead[\fancyplain{}{}]{\fancyplain{}{}}
+\renewcommand{\headrulewidth}{0.pt}
+
+\chead{\textbf{–}~\thepage~\textbf{–}}
+%\lhead[\fancyplain{}{}]{\fancyplain{}{}}
+%%\chead[\fancyplain{}{\em\leftmark}]{\fancyplain{\em\leftmark}{\em\rightmark}}
+%\chead{}
+%\chead[\fancyplain{}{\thepage}]{\fancyplain{}{\thepage}}
+%%\rhead[\fancyplain{}{}]{\fancyplain{}{\thepage}}
+%\rhead[\fancyplain{}{}]{\fancyplain{}{}}
+
+
+%%%%%%%%%%%%%%%%%%%
+% Подписи к рисункам и таблицам
+%%%%%%%%%%%%%%%%%%%
+\usepackage[format=plain,labelfont=it,font=normalsize,skip=6pt]{caption}
+\DeclareCaptionLabelSeparator{dot}{.~} % разделитель между заголовком и телом подписи
+%\DeclareCaptionFont{m1}{\fontsize{11}{13pt}\selectfont} % шрифт подписи
+\captionsetup{labelsep=dot}%, font=m1} % активация новых настроек
+\DeclareCaptionFormat{LabRCaptC}{\hfill#1#2#3}
+
+%%%%%%%%%%%%%%%
+% Некоторые настройки
+% плавающих объектов
+%%%%%%%%%%%%%%%%
+\renewcommand{\topfraction}{0.95} % default 0.7
+\renewcommand{\textfraction}{0.05} % default 0.2
+\renewcommand{\floatpagefraction}{0.85} % default 0.5
+% this should be smaller than topfraction
+\setcounter{topnumber}{4} % default 2
+\setcounter{bottomnumber}{2} % default 1
+\setcounter{totalnumber}{6} % default 3
+\setlength{\textfloatsep}{12pt plus 3pt minus 3pt}
+\setlength{\intextsep}{12pt plus 3pt minus 3pt}
+\setlength{\abovecaptionskip}{6pt}
+
+
+%%%%%%%%%%%%%%%%%%
+% некоторые полезные пакеты
+%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath, amsfonts, amssymb, latexsym, amsthm, multicol, mathtools}
+\mathtoolsset{showonlyrefs,showmanualtags}
+\usepackage{float}
+\usepackage{indentfirst} % абзацный отступ в первом параграфе
+\usepackage{graphicx}
+\graphicspath{{./Images/}}
+\usepackage[small,bf]{subfigure}
+\renewcommand{\thesubfigure}{\asbuk{subfigure})}
+%\renewcommand{\thesubtable}{\asbuk{subtable})}
+\usepackage{figsize}
+%\usepackage{wrapfig}
+\usepackage{hhline}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+%\usepackage{cite} % правильная организация ссылок в команде \cite
+%\usepackage{soulutf8}
+\usepackage{nccstretch}
+%\usepackage{calrsfs}
+%\usepackage{ncccomma}
+\usepackage{icomma} % Правильная расстановка пробелов в числах с разделителем ,
+\usepackage[strict]{csquotes}% Recommended
+
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{itemsep=0mm}
+\setlist{nolistsep,leftmargin=5ex}
+\usepackage[section,nottoc,notlot]{tocbibind}
+%\usepackage[babel]{microtype}
+%\usepackage{rotating}
+
+\usepackage[
+style=gost-numeric,
+%defernumbers=true,
+%babel=other,language=auto,
+autolang=other,
+backend=biber,%refsection=section,
+sorting=none,
+citereset=none,
+maxnames=3,
+movenames=true,
+hyperref=true,
+url=true,
+dashed=false
+%backref=true
+]{biblatex}
+
+% \bibliography{<mybibfile>}% ONLY selects .bib file; syntax for version <= 1.1b
+%\addbibresource[datatype=bibtex]{./PreprDS.bib}% Syntax for version >= 1.2
+\addbibresource[datatype=bibtex]{./batkhinUTF8.bib}% Syntax for version >= 1.2
+\addbibresource[datatype=bibtex]{./biblionewUTF8.bib}% Syntax for version >= 1.2
+%\addbibresource[datatype=bibtex]{../../StabilityUTF.bib}% Syntax for version >= 1.2
+
+%%%%%%%%%%%%%%%%%%
+% Организация гиперссылок
+%%%%%%%%%%%%%%%%%%
+%\usepackage{xr-hyper}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+pdfencoding=auto,
+pdftitle={Вычисление дискриминантного множества вещественного многочлена},
+pdfauthor={А.Б.Батхин},
+pdfsubject={теория исключения},
+pdfkeywords={теория исключения, обобщённый дискриминант, разбиения, компьютерная алгебра}
+}
+
+%\usepackage{showkeys}
+\usepackage{color}
+
+
+%%%%ENGLISH Version%%%%%%%%%%%%%%%%%%%%%
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{lemma}{Lemma}[section]
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{definition*}{Definition}%[section]
+%\newtheorem{proof}{Proof}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\numberwithin{equation}{section}
+%\renewcommand{\theequation}{\thesection.\arabic{equation}}
+
+%\newtheorem{theorem}{Теорема}[section]
+\newtheorem{theorem}{Теорема}
+\newtheorem{example}{Пример}
+\newtheorem{conjecture*}{Гипотеза}
+
+\newtheorem{proposition}{Предложение}%[section]
+%\renewcommand{\theproposition}{\thesection.\arabic{proposition}}
+
+\newtheorem{corollary}{Следствие}%[section]
+%\renewcommand{\thecorollary}{\thesection.\arabic{corollary}}
+
+\newtheorem{lemma}{Лемма}%[section]
+%\renewcommand{\thelemma}{\thesection.\arabic{lemma}}
+
+%\theoremstyle{definition}
+\newtheorem{definition}{Определение}%[section]
+\newtheorem{definition*}{Определение}%[section]
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{defin}{Definition}
+
+%\theoremstyle{plain} \theoremstyle{remark}
+\newtheorem{remark}{\it Замечание}%[section]
+%\renewcommand{\theremark}{\thesection.\arabic{remark}}
+
+
+\begin{document}
+
+\section{Введение}\label{sec:intro}
+
+\section{Задача Хилла как регулярное возмущение задачи Кеплера}
+Задача Хилла некоторым предельным вариантом круговой ограниченной задачи трёх тел (ОЗТТ), а её периодические решения продолжаются до соответствующих решений ОЗТТ. 
+
+Задачу Хилла можно рассматривать как регулярное возмущение кеплеровой задачи в синодической системе координат, т. е. теперь
+\begin{equation}\label{eq:Keplerperturbed}
+\begin{aligned}
+H&=H_0+\varepsilon R,\text{ где }\\
+H_0&=\frac12\left(y_1^2+y_2^2\right)+x_2y_1-x_1y_2-\frac{1}{r},\\
+R&=-x_1^2+\frac12x_2^2=\frac12r^2-\frac32x_1^2,\text{ где }r=\sqrt{x_1^2+x_2^2}.
+\end{aligned}
+\end{equation}
+При $\varepsilon=0$ имеем гамильтониан задачи Кеплера в равномерно вращающейся (синодической) системе координат, а при $\varepsilon=1$ получаем гамильтониан задачи Хилла.
+
+Неинтегрируемая плоская круговая задача Хилла может рассматривается с точки зрения задачи Кеплера в равномерно вращающейся  (синодической) системе координат. В этом случае функция Гамильтона \textit{обобщённой задачи Хилла}~\cite{BatkhinDAN2014} представима в виде $H=H_0+R$, где
+\begin{equation*}\label{Bat:HamGHP}
+H_0=\frac12\left(y_1^2+y_2^2\right)+x_2y_1-x_1y_2+\frac{\sigma}{|\bm x|},\quad R=\varepsilon\left(-x_1^2+\frac12x_2^2\right).
+\end{equation*}
+Здесь $\bm x$ и $\bm y$ -- векторы координат и импульсов, $\varepsilon\in[0;1]$ и $\sigma\in\{-1,0\}$ -- параметры. 
+
+При $\varepsilon=0$ и $\sigma=-1$ получаем гамильтониан \textit{синодической задачи Кеплера}, описывающей динамику спутника вблизи меньшего активного тела. При $\varepsilon=1$ и $\sigma=0$ получаем гамильтониан \textit{задачи Энона}~\cite[Гл.~3]{BatkhinsHill}, дающей квазиспутниковое приближение. При $\varepsilon=1$ и $\sigma=-1$ получаем гамильтониан самой задачи Хилла.
+
+Такое представление задачи Хилла было впервые, по"=видимому, предложено в~\cite{Bruno96}, но так и не было использовано для поиска новых семейств периодических решений задачи Хилла.
+
+Напомним, что все конечные движения в задаче Кеплера в сидерической (инерциальной) системе координат являются периодическими, а их орбиты представляют собой эллипсы. Движение материальной точки по эллипсу однозначно определяется следующими элементами: $a$~--- большой полуосью орбиты, $e$~--- эксцентриситетом,  $\varpi$~--- аргументом перицентра, $l$~--- средней аномалией и направлением движения $\varepsilon'=\pm1$. Если начало координат сидерической системы поместить в фокус эллипса, а в качестве начального момента времени выбрать момент прохождения перицентра, то движение тела описывается уравнениями
+\begin{equation}\label{eq:sideric}
+\begin{aligned}
+x&=a\cos \varpi  \left( \cos  E  -\varepsilon'\,e \right) -a\sin  \varpi  \sqrt {1-{e}^{2}}\sin E,\\
+y&=a\sin  \varpi  \left( \cos E  -\varepsilon'\,e \right) +a\cos \varpi  \sqrt {1-{e}^{2}}\sin E,\\
+t&={a}^{3/2}(l-l_0),% \left( E-\epsilon'\,e\sin \left( E \right)  \right),
+\end{aligned}
+\end{equation}
+где $E$~--- эксцентрическая аномалия. Связь между средней аномалией $l$ и эксцентрической аномалией $E$ задается уравнением Кеплера: $l=E-e\sin E$. Связь между %средней аномалией $l$,
+эксцентрической аномалией $E$ и истинной аномалией $v$ показана на рис.~\ref{fig:anomaly}.
+
+При переходе в синодическую~--- равномерно вращающуюся~--- систему координат периодическими решениями будут либо те, у которых сидерические орбиты круговые, либо те, у которых период соизмерим с периодом равномерного вращения $2\pi$. Более того, в синодической системе появляется множество неподвижных точек, расположенных на единичной окружности.
+
+Периодические решения синодической кеплеровой задачи представлены двумя однопараметрическими семействами круговых прямых и обратных $\mathcal Id$ и $\mathcal Ir$, соответственно, и счетным числом трехмерных многообразий $\mathcal D_N$ для $N=1+q/p$, где $p>0$ и $q$~--- взаимно простые целые числа.
+
+В дальнейшем, для упрощения некоторых формул удобно ввести так называемый \textit{коэксцентриситет} $e'$~\cite[\S~3.3]{Henon97}:
+\begin{equation}
+  e'=\varepsilon'\sqrt{1-e^2}.
+\end{equation}
+Заметим, что эксцентриситет $e$  и коэксцентриситет $e'$ можно задать с помощью параметра $\psi$ как это сделано в~\cite[\S~3.3.1]{Henon97}:
+\begin{equation}
+  e=\sin\psi,\quad e'=\cos\psi,\quad \psi\in[0;\pi).
+\end{equation}
+
+
+\subsection{Возмущение стационарных точек}
+Стационарные точки системы канонических уравнений синодической Кеплеровой задачи образуют единичную окружность $r=1$ на плоскости $XOY$, которая при возмущении $R$ разрушается, но остаются две пары стационарных точек. Первая пара с координатами $\left(\pm(1+2\varepsilon)^{-1/3},0\right)$ лежит на оси $OX$ и соответствует коллинеарным точкам либрации. Вторая пара неподвижных точек с координатами $\left(0,\pm(1-\varepsilon)^{-1/3}\right)$ лежит на оси $OY$ и стремится к бесконечности при $\varepsilon\rightarrow 1$. Следует ожидать, что прямые орбиты, расположенные вне единичной окружности, будут разрушаться при возмущении Хилла~\eqref{eq:Keplerperturbed}.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=12cm]{Images/anomaly}
+\caption{Геометрическая интерпретация эксцентрической и истинной аномалий на примере эллиптической орбиты при $a=1$ и $e=0.75$.}\label{fig:anomaly}
+\end{figure}
+
+
+
+\subsection{Возмущение эллиптических орбит}
+Будем рассматривать порождающую задачу в модифицированных элементах Делоне (см.~\cite[гл.~7]{Szebehely}). В этих координатах гамильтониан $H_0$ представлен в нормальной форме в окрестности интегральных многообразий прямых и обратных эллиптических орбит $\mathcal Dd_N$ и $\mathcal Dr_N$, соответственно~\cite[гл.~VII, \S2]{BrunoRTBP}, а  первое приближение нормальной формы гамильтониана $H$ получается в результате усреднения возмущения $R$ (см.~\cite[п.~4.4]{BrunoLocal}). Далее будем использовать обозначения, принятые в~\cite[гл.~VII]{BrunoRTBP}.
+
+В переменных Делоне $(l,g,L,G)$, смысл которых будет объяснен ниже, %где $l$~--- средняя аномалия, $g$~--- положение перицентра эллиптической орбиты, $L$ и $G$~--- канонически сопряженные импульсы,
+гамильтониан~\eqref{eq:Keplerperturbed} запишется следующим образом:
+\begin{equation}\label{eq:H0R}
+H_0=-G-\frac1{2L^2},\quad R=\frac12r^2-\frac32r^2\cos^2h,
+\end{equation}
+где $r$ и $h$~--- полярные координаты точки. При $\varepsilon=0$ эллиптические орбиты определяются следующими значениями переменных Делоне:
+\begin{equation}\label{eq:Delauneorbit}
+L=\sqrt{a},\quad G=\varepsilon'\sqrt{a(1-e^2)}=e'\sqrt a,\quad l=Nt,\quad g=\varpi-t,
+\end{equation}
+где $a$~--- большая полуось орбиты, $e$~--- ее эксцентриситет, $N=a^{-3/2}$~--- среднее движение по орбите, $\varpi$~--- аргумент перицентра орбиты, а $\varepsilon'=\pm1$ при прямом или обратном движении по орбите, соответственно. Величина $\varepsilon'l$ есть средняя аномалия, определяющая положение точки на эллиптической орбите в определенный момент времени, а $g$ задает движение перицентра орбиты. Поскольку выбрана синодическая система координат, то перицентр эллиптической орбиты равномерно вращается против часовой стрелки. Наконец, обобщенные импульсы $L$ и $G$ связаны со значениями первых интегралов движения: $L$ с интегралом энергии, а $G$ есть интеграл площадей.
+
+Каждое из многообразий $\mathcal M\in\mathcal Dd_N\cup\mathcal Dr_N$ задаётся значением $L=L_0$. Будем рассматривать только такие $L_0$, что среднее движение $N=L_0^{-3}$ будет рациональным числом, представимым в виде $N=1+q/p$, тогда многообразие $\mathcal M$ состоит из периодических орбит с периодом $T_0=2\pi p$. На этих резонансах гамильтониан $H$ будет зависеть только от одной угловой переменной $\varpi$ и обобщенного импульса $G$. Условие, выделяющее среди множества периодических решений многообразия $\mathcal M$ порождающие орбиты, следующее:
+\begin{equation}\label{eq:Ravg}
+\frac{\partial[R(\varpi,G)]}{\partial\varpi}=0,
+\end{equation}
+где скобки $[\cdot]$ означают усреднение вдоль периодического решения. Таким образом, порождающие решения, удовлетворяющие~\eqref{eq:Ravg}, образуют однопараметрическое семейство.
+
+Для определения порождающих решений при возмущении~\eqref{eq:H0R} перепишем функцию $R$ как функцию от средней аномалии $l$, тогда
+\begin{equation}
+[R]=\frac{1}{2\pi p}\int\limits_0^{2\pi p}R(t,\varpi,G)dt=\frac{1}{2\pi p}\int\limits_0^{2\pi(p+q)}R(l,\varpi,N)N^{-1}dl.
+\end{equation}
+
+Угловая координата $h$ точки определяется положением перицентра $g$ и значением истинной аномалии $v$:
+\begin{equation}\label{eq:hv}
+h=\varepsilon'v+g=\varepsilon'v+\varpi-N^{-1}l(v).
+\end{equation}
+Истинная аномалия $v$ связана со средней аномалией $l$ через эксцентрическую аномалию $E$ соотношением
+%\begin{equation*}
+%\begin{aligned}
+$\tg({v}/{2})=\sqrt{({1+e})/({1-e})}\tg({E}/{2})$
+%l&=E-e\sin E\text{ --- уравнение Кеплера.}
+%\end{aligned}
+%\end{equation*}
+и уравнением Кеплера $l=E-e\sin E$.
+
+Представим возмущающую функцию $R$ в виде суммы двух слагаемых: $R=R_1+R_2$, где $R_1=-r^2/4$, $R_2=-3/4\cdot r^2\cos2h$. Поскольку функция $R_1$ не зависит от $\varpi$, то и ее усреднение $[R_1]$ будет зависеть только от $L$ и $G$ (или от $a$ и $e$), следовательно, $\partial[R_1]/\partial\varpi\equiv0$.\label{ref:R1}
+
+Подставим выражение~\eqref{eq:hv} в функцию $R_2$ и, с учетом соотношений $x=r\cos v$ и $y=r\sin v$, запишем ее в виде
+\begin{equation}\label{eq:R2}
+\begin{split}
+R_2=&-\frac34\left(x^2-y^2\right)\left(\cos2\varpi\cos\frac{2pl}{p+q}+\sin2\varpi\sin\frac{2pl}{p+q}\right)-\\
+{}&-\frac32\varepsilon'xy\left(\cos2\varpi\sin\frac{2pl}{p+q}-\sin2\varpi\cos\frac{2pl}{p+q}\right).
+\end{split}
+\end{equation}
+Для представления величин $x^2$, $y^2$ и $xy$ как функций средней аномалии воспользуемся соотношениями (см. рис.~\ref{fig:anomaly})
+\begin{equation}
+x=a\left(\cos E-e\right),\quad y=a\sqrt{1-e^2}\sin E,
+\end{equation}
+тогда
+\begin{align}
+x^2-y^2&=\frac32a^2e^2 -2a^2e\cos E+a^2\left(1-\frac{1}{2}e^2\right)\cos2E,\label{eq:x2y2}\\
+%y^2&=\frac{a^2(1-e^2)}{2}(1-\cos2E),\\
+\varepsilon'xy&=a^2e'\left(\frac12\sin2E-e\sin E\right).\label{eq:xy}
+\end{align}
+Теперь применим разложение тригонометрических функций эксцентрической аномалии в ряды Фурье по средней аномалии с помощью функций Бесселя первого рода (см.~\cite[гл.~VI, \S~5]{Subbotin}):
+\begin{align}
+\cos E&=-\frac12e+\sum_{k=1}^\infty\frac{1}{k}\left(J_{k-1}(ke)-J_{k+1}(ke)\right)\cos kl,\label{eq:cosE}\\
+\sin E&=2\sum_{k=1}^\infty \frac1k J_k(ke)\sin kl,\label{eq:SinE}\\
+\cos mE&=\sum_{k=1}^\infty\frac{m}{k}\left(J_{k-m}(ke)-J_{k+m}(ke)\right)\cos kl,\quad m>1,\quad m\in\mathbb N,\label{eq:cosmE} \\
+\sin mE&=\sum_{k=1}^\infty\frac{m}{k}\left(J_{k-m}(ke)+J_{k+m}(ke)\right)\sin kl.\label{eq:sinmE}
+\end{align}
+
+С помощью тождества 
+\begin{equation}\label{eq:Jequality}
+ \frac{x}{2}\left(J_{k-1}(x)+J_{k+1}(x)\right)=kJ_k(x),
+\end{equation}
+перепишем разложения функций $\cos E$, $\cos 2E$ и $\sin 2E$ так, чтобы каждый коэффициент в разложении возмущения $R_2$ по средней аномалии $l$ зависел от пары функций Бесселя первого рода порядков $k$ и $k+1$ соответственно.
+Непосредственные вычисления показывают, что
+\begin{equation}
+\begin{aligned}
+\frac{1}{k}\left(J_{k-1}(ke)-J_{k+1}(ke)\right)&=\frac2{ke}\left(J_k(ke)-eJ_{k+1}(ke)\right),\\
+\frac{2}{k}\left(J_{k-2}(ke)-J_{k+2}(ke)\right)&=\frac8{k^2e^2}\left((k-1)J_k(ke)-keJ_{k+1}(ke)\right),\\	
+\frac{2}{k}\left(J_{k-2}(ke)+J_{k+2}(ke)\right)&=\frac{4}{k^2e^2}\left((2k-2-ke^2)J_k(ke)+2eJ_{k+1}(ke)\right).
+\end{aligned}  
+\end{equation}
+
+
+Теперь запишем выражения~\eqref{eq:x2y2} и~\eqref{eq:xy} в виде тригонометрических рядов по $l$ с коэффициентами от функций Бесселя 
+\begin{align}
+x^2-y^2&=\frac52a^2e^2-\frac{4a^2}{e^2}\sum_{k=1}^\infty\frac1k\left\{\left(1+(1-2k){e'}^2\right)J_k(ke)+2ke {e'}^2J_{k+1}(ke)\right\}\cos kl
+%=\\\notag
+%{}&=\frac52a^2e^2-\frac{4a^2}{\sin^2\psi}\sum_{k=1}^\infty\frac1{k^2}\left\{\left(1+(1-2k)\cos^2\psi\right)J_k(k\sin\psi)+2k\sin\psi \cos^2\psi J_{k+1}(k\sin\psi)\right\}\cos kl
+,\label{eq:x2y2l}\\
+\varepsilon' xy=&\frac{4a^2{e'}}{e^2}\sum_{k=1}^\infty\frac1{k^2}\left\{\left(k{e'}^2-1\right)J_k(ke)+eJ_{k+1}(ke)\right\}\sin kl.\label{eq:xyl}
+\end{align}
+
+%\begin{align}
+%x^2-y^2&=\frac52a^2e^2+{4a^2}\sum_{k=1}^\infty\frac1k\left[-eJ'_k(ke)+(2-e^2)J''_k(ke)\right]\cos kl,\label{eq:x2y2l}\\
+%xy&=4a^2\sqrt{1-e^2}\sum_{k=1}^\infty\frac1kJ''_k(ke)\sin kl.\label{eq:xyl}
+%\end{align}
+Поскольку $[\cos kl\sin ml]=0$ при любых целых $k$ и $m$,  то функция $x^2-y^2$ разлагается в ряд по $\cos kl$,  а функция $xy$ в ряд по $\sin kl$, то достаточно посчитать только усреднения  $\left[\left(x^2-y^2\right)\cos2\varpi\cos\dfrac{2pl}{p+q}\right]$ и $\left[2\varepsilon'xy\cos2\varpi\sin\dfrac{2pl}{p+q}\right]$. Заметим, что
+\begin{equation}
+[\cos kl\cos ml]=[\sin kl\sin ml]=\left\{
+\begin{aligned}
+0,&\text{ при } k\neq m,\\
+\frac12,&\text{ при } k=m,
+\end{aligned}
+\right.\quad k,\,m\in\mathbb Z.
+\end{equation}
+
+Из вида~\eqref{eq:R2} возмущающей функции $R_2$ и представления ее компонентов в виде разложения в ряды Фурье по средней аномалии $l$~(\ref{eq:x2y2l}--\ref{eq:xyl}) следует, что ее усреднение $[R_2]$ представимо в виде
+\begin{equation}
+[R_2]=F\left(p,\varepsilon,e'\right)\cos2\varpi,
+\end{equation}
+где $F(p,\varepsilon,e)$~--- некоторая функция от указанных аргументов. Следовательно, условие~\eqref{eq:Ravg} выполняется в одном из двух случаев: либо
+\begin{equation}\label{eq:gencond1}
+\varpi={n\pi}/{2},\quad n\in\mathbb N,\quad p,\;\varepsilon',\;e\text{ --- любые,}
+\end{equation}
+либо
+\begin{equation}\label{eq:gencond2}
+F(p,\varepsilon',e)=0,\quad \varpi\text{ --- любое.}
+\end{equation}
+При выполнении условия~\eqref{eq:gencond1} порождающие решения представляют собой симметричные орбиты либо относительно оси $OX$ при $\varpi=0,\,\pi$, либо относительно оси $OY$ при $\varpi=\pm\pi/2$ при любых значениях эксцентриситета $e$, направления движения $\varepsilon'$ и кратности $p$. Если выполнено условие~\eqref{eq:gencond2}, то корни уравнения $F(p,\varepsilon',e)=0$ определяют несимметричные порождающие периодические решения, если $\varpi\neq n\pi/2$, $n\in\mathbb N$.
+
+%Рассмотрим три случая: $p+q=1$, $p+q=2$ и $p+q>2$.
+Нетрудно видеть, что случай $p+q=2$ включает в себя случай $p+q=1$ при чётном $p$.
+
+
+%\subsection*{Случай $p+q=1$}
+%В этом случае при усреднении сохранятся только те члены в разложениях~(\ref{eq:x2y2l}--\ref{eq:xyl}), у которых $k=2p$. %Следует учесть, что величины $N$ и $a$ связаны соотношением $N=a^{-3/2}$, поэтому в случае $p+q=1$ получим, что $a=p^{2/3}$.
+%Таким образом, имеем
+%\begin{equation}
+%[R_2]=\frac{3a^2\cos2\varpi}{4p}\left(eJ'_{2p}(2pe)-(2-e^2+\varepsilon'\sqrt{1-e^2})J''_{2p}(2pe)\right).
+%\end{equation}
+
+\subsection*{Случай $p+q=2$}
+В этом случае при усреднении сохранятся только те члены в разложениях~(\ref{eq:x2y2l}--\ref{eq:xyl}), у которых $k=p$. Усреднение $[R_2]$ имеет вид
+%При этом $p$ не может быть четным, поскольку тогда дробь $N=(p+q)/p$ будет сократима.
+\begin{equation}
+%[R_2]=\frac{3a^2\cos2\varpi}{2p}\left(eJ'_{p}(pe)-(2-e^2+\varepsilon'\sqrt{1-e^2})J''_{p}(pe)\right).
+[R_2]=\frac{3a^2\cos2\varpi}{2p^2}\left(\frac{2p{e'}^2-e'-1}{e'-1}J_p(pe)+\frac{2e'(pe'-1)}e J_{p+1}(pe)\right).
+\end{equation}
+
+\subsection*{Случай $p+q>2$}
+Поскольку числа $p$ и $q$ взаимно простые, то дробь $p/(p+q)$ будет несократима и не будет целым числом, значит в этом случае $k\neq p/(p+q)$ и, следовательно, $[R_2]=0$.
+
+Осталось заметить, что величины $N$ и $a$ связаны соотношением $N=a^{-3/2}$, поэтому в случае  $p+q=2$ имеем $a=(p/2)^{2/3}$.
+Итак, доказана следующая теорема
+\begin{theorem}
+\begin{equation*}
+[R_2]=\left\{
+\begin{aligned}
+%{}&\frac{3\sqrt[3]p}{2}\cos2\varpi S_{2p}(\varepsilon',e)\text{ при }p+q=1;\\
+{}&\frac{3}{\sqrt[3]{2^7p^2}}\cos2\varpi S_p(\varepsilon',e)\text{ при }p+q=2;\\
+{}&0\text{ при }p+q>2,
+\end{aligned}
+\right.
+\end{equation*}
+где
+\begin{equation}
+S_p(\varepsilon',e)=\frac{2p{e'}^2-e'-1}{e'-1}J_p(pe)+\frac{2e'(pe'-1)}e J_{p+1}(kp)
+%eJ'_{p}(pe)-\left(\sqrt{1-e^2}+\varepsilon'\right)^2J''_{p}(pe),
+\end{equation}
+а $J_p(x)$~--- функция Бесселя первого рода.
+\end{theorem}
+
+Укажем некоторые свойства $S_p(\varepsilon',e)$ как функции от $e$:
+\begin{enumerate}
+\item На интервале $0\leqslant  e<1$ функция $S_p(e)$ аналитична.
+\item При $e\rightarrow 0$
+\begin{equation*}
+S_p(e)=\left\{
+\begin{aligned}
+{}&-\frac{4(p-1)p^{p-1}}{p!2^p}e^{p-2}\left(1+O(e^2)\right),\text{ при }\varepsilon'=+1,\,p>1,\\
+{}&\frac{(pe)^{p}}{p!2^p}\left(1+O(e^2)\right),\text{ при }\varepsilon'=-1.
+\end{aligned}
+\right.
+\end{equation*}
+\item $S_p(1)=J_p(p)>0$.
+%J'_p(p)-J''_p(p)>0$.
+\item Уравнение~\eqref{eq:gencond2} имеет единственный корень $e^*_p\in(0;1)$ при $\varepsilon'=1$ и $p>1$.
+\item При $\varepsilon'=-1$ уравнение~\eqref{eq:gencond2} не имеет корней $e^*_p$ на интервале $(0;1)$.
+\end{enumerate}
+
+Графики функции $S_p(\varepsilon',e)$ для значений $p=1$, $2$, $3$, $4$ и $\varepsilon'=\pm1$ показаны на рис.~\ref{fig:Sp}.
+
+\begin{figure}[H]
+\centering
+\SetFigLayout{2}{2}
+\subfigure{\includegraphics[width=.5\textwidth]{images/S1.png}}\hfill
+\subfigure{\includegraphics[width=.5\textwidth]{images/S2.png}}\\
+\subfigure{\includegraphics[width=.5\textwidth]{images/S3.png}}\hfill
+\subfigure{\includegraphics[width=.5\textwidth]{images/S4.png}}
+\caption{Графики функции $S_p(\varepsilon',e)$ для значений $p=1$, $2$, $3$, $4$ (слева направо и сверху вниз). 
+%Сплошная линия соответствует значению $\varepsilon'=1$, пунктирная~--- $\varepsilon'=-1$.
+}
+\label{fig:Sp}
+\end{figure}
+
+%Для определения поправок первого порядка к периоду и индексу устойчивости порождающего периодического решения необходимо вычислить производные $\partial[R]/\partial G$ и $\partial^2[R]/\partial \varpi^2$. В силу замечания на стр.~\pageref{ref:R1} $\partial^2[R]/\partial \varpi^2=\partial^2[R_2]/\partial \varpi^2$ и, следовательно, для симметричных порождающих решений получим
+%\begin{equation*}
+%\frac{\partial^2[R]}{\partial \varpi^2}=\left\{
+%\begin{aligned}
+%{}&\pm{6\sqrt[3]p} S_{2p}(\varepsilon',e)\text{ при }p+q=1;\\
+%{}&\pm\frac{3\sqrt[3]p}{\sqrt[3]2} S_p(\varepsilon',e)\text{ при }p+q=2.
+%\end{aligned}
+%\right.
+%\end{equation*}
+%Функция $f(y_2)$ для гамильтониана~\eqref{eq:H0R} имеет вид $f(y_2)=-1/2(y_2+L_0)^{-2}$, тогда $f''(0)=-3L_0^{-4}=-3a^{-2}$.
+%Учитывая, что $T_0=2\pi p$ согласно формуле~\eqref{eq:Sseries}, получаем выражение для индекса устойчивости
+%\begin{equation}\label{eq:Stabgen}
+%s=\left\{\begin{aligned}
+%1&\mp36\varepsilon\pi^2p^3S_{2p}(\varepsilon',e)+O(\varepsilon^2)\text{ при }p+q=1,\\
+%1&\mp9\varepsilon\pi^2p^3S_{p}(\varepsilon',e)+O(\varepsilon^2)\text{ при }p+q=2.
+%\end{aligned}
+%\right.
+%\end{equation}
+%При этом знак <<$-$>> соответствует порождающим решениям с $\varpi=0$, $\pi$, а знак <<$+$>>~--- порождающим решениям с $\varpi=\pi/2$, $3\pi/2$.
+%
+%Для вычисления $[R_1]$ воспользуемся разложением $r^2$ по средней аномалии:
+%\begin{equation*}\label{eq:r2series}
+%r^2=a^2\left(1+\frac32e^2\right)-\sum_{k=0}^\infty\frac{4}{k^2}J_k(ke)\cos kl.
+%\end{equation*}
+%Усредняя по средней аномалии, получим
+%\begin{equation}\label{eq:R1avg}
+%[R_1]=\left\{
+%\begin{aligned}
+%{}&-\frac{p^{4/3}}4\left(1+\frac32e^2\right)&&\text{ при }p+q=1,\\
+%{}&-\frac{p^{4/3}}{2^{10/3}}\left(1+\frac32e^2\right)&&\text{ при }p+q=2,\\
+%{}&0&&\text{ при }p+q>2.
+%\end{aligned}
+%\right.
+%\end{equation}
+%
+%
+%Остается учесть, что обобщенный импульс $G$ связан с эксцентриситетом $e$ соотношением~\eqref{eq:Delauneorbit}, а тогда
+%\begin{equation*}
+%\frac{\partial[R]}{\partial G}=\frac{\partial[R]}{\partial e}\cdot\frac{\partial e}{\partial G}=\frac{\partial[R]}{\partial e}\cdot\frac1{G'_e}=-\frac{\partial[R]}{\partial e}\frac{\varepsilon'\sqrt{a}e}{\sqrt{1-e^2}}.
+%\end{equation*}
+%В итоге получаем разложение для периода порождающего решения с точностью до первого порядка по $\varepsilon$
+%\begin{equation*}
+%T=\left\{
+%\begin{aligned}
+%{}&2\pi p\left[1-\varepsilon\frac{3\varepsilon'p^{2/3}e}{2\sqrt{1-e^2}}\left(\frac{pe}{2}-\cos2\varpi S'_{2p}(\varepsilon',e)\right)+O(\varepsilon^2)\right]\text{ при }p+q=1,\\
+%{}&2\pi p\left[1-\varepsilon\frac{3\varepsilon'p^{2/3}e}{\beta\sqrt{1-e^2}}\left(pe-2\cos2\varpi S'_{p}(\varepsilon',e)\right)+O(\varepsilon^2)\right]\text{ при }p+q=2,
+%\end{aligned}
+%\right.
+%\end{equation*}
+%где  $\beta=2^{10/3}$.
+%
+%Рассмотрим подробнее порождающие решения. Выделяется два их типа: симметричные, удовлетворяющие условию~\eqref{eq:gencond1} и несимметричные, удовлетворяющие условию~\eqref{eq:gencond2}. В каждом из случаев число порождающих семейств счетно.
+%
+%\subsubsection*{Симметричные порождающие решения} Это семейства периодических орбит с фиксированным значением аргумента перицента $\varpi=k\pi/2$, $k=0$, $1$, $2$, $3$, направлением движения $\varepsilon'=\pm1$ и произвольным значением эксцентриситета из  интервала $0<e\leqslant1$.{\sloppy
+%
+%}
+%
+%Если $p+q=1$, то четность целых чисел $p$  и $q$ различна. В этом случае имеется два $\Sigma_1$--симметричных семейства с $\varpi=0$, $\pi$ и два $\Sigma_2$--симметричных семейства с $\varpi=\pi/2$, $3\pi/2$. Примеры орбит показаны на рис.~\ref{fig:singlesym}.
+%
+%%\begin{figure}[H]
+%%\centering
+%%\SetFigLayout{2}{2}
+%%\subfigure{\includegraphics[width=.5\textwidth]{images/D2m11}}\hfill
+%%\subfigure{\includegraphics[width=.5\textwidth]{images/D2m12}}\\
+%%\subfigure{\includegraphics[width=.5\textwidth]{images/D2m13}}\hfill
+%%\subfigure{\includegraphics[width=.5\textwidth]{images/D2m14}}
+%%\caption{Однократно симметричные прямые порождающие орбиты при $p=2$, $q=-1$, $e=7/9$, $\varepsilon'=1$.}
+%%\label{fig:singlesym}
+%%\end{figure}
+%
+%Согласно формуле~\eqref{eq:Stabgen} одна пара решений будет при продолжении по параметру $\varepsilon$ давать устойчивые орбиты, а другая неустойчивые. При $e<e^*_p$ устойчивые орбиты будут $\Sigma_2$--симметричные, а при $e>e^*_p$~--- $\Sigma_1$--симметричные.{\sloppy
+%
+%}
+% 
+% Если $p+q=2$, то оба целых числа $p$ и $q$ нечетные. В этом случае имеется два двояко симметричных семейства порождающих решения с $\varpi=0$, $\pi/2$, соответственно. Примеры орбит показаны на рис.~\ref{fig:doublesym}.
+%
+%%\begin{figure}[H]
+%%\centering
+%%\SetFigLayout{1}{2}
+%%\subfigure{\includegraphics[width=.5\textwidth]{images/D11a}}\hfill
+%%\subfigure{\includegraphics[width=.5\textwidth]{images/D11b}}
+%%\caption{Двояко симметричные обратные порождающие орбиты при $p=1$, $q=1$, $e=7/9$, $\varepsilon'=-1$.}
+%%\label{fig:doublesym}
+%%\end{figure}
+%
+%Как и в предыдущем случае, одно решение будет давать устойчивые орбиты, а другое~--- неустойчивые. 
+%
+%\subsubsection*{Несимметричные порождающие решения} Это семейства прямых ($\varepsilon'=1$) периодических орбит с фиксированным значением эксцентриситета $e=e^*_p$, $p>1$ и произвольном значении аргумента перицентра $\varpi\neq k\pi/2$, $k=0$, $1$, $2$, $3$. Приближенные значения $e^*_p$ для $p=2$,\ldots,$10$ указаны в таблице~\ref{tab:ecrit}. Примеры несимметричных порождающих орбит показаны на рис.~\ref{fig:asymmetric}. {\sloppy
+%
+%}
+%
+%Отметим, что поскольку для несимметричных орбит $p>1$, то $N=1/p$ или $N=2/p$, при $p>2$, то $a>1$, т.\,е. все они лежат вне окружности неподвижных точек. Более того, поскольку $S_p(1,e^*_p)=0$ для $p>1$, то поправки первого порядка к индексу устойчивости и периоду несимметричных порождающих решений будут равны нулю.
+%
+%\begin{table}[H]
+%\begin{center}
+%\caption{Критические значения эксцентриситета для несимметричных порождающих решений}
+%\begin{tabular}{||c|c|c||}
+%\hline
+%\hline
+%{\large №} & {\large $p$} & {\large $e^*_p$}\\
+%\hline
+%1 & 2 &  0,67263199652821 \\
+%2 & 3 &  0,76201296558111\\
+%3 & 4 &  0,80042875827756 \\
+%4 & 5 &  0,82197002774461\\
+%5 & 6 &  0,83584549376657 \\
+%6 & 7 &  0,84558379030681 \\
+%7 & 8 &  0,85282899502939 \\
+%8 & 9 &  0,85845157323104 \\
+%9 & 10& 0,86295621696501\\
+%\hline
+%\hline
+%\end{tabular}
+%\end{center}
+%\label{tab:ecrit}
+%\end{table}%
+
+
+%\begin{figure}[H]
+%\centering
+%\SetFigLayout{1}{2}
+%\subfigure[$p=2$, $q=-1$, $e^*_2=0,67263199652821$]{\includegraphics[width=.5\textwidth]{images/D2m1G}}\hfill
+%\subfigure[$p=3$, $q=-1$, $e^*_3=0,76201296558111$]{\includegraphics[width=.5\textwidth]{images/D3m1G}}
+%\caption{Несимметричные прямые порождающие орбиты.}
+%\label{fig:asymmetric}
+%\end{figure}
+
+Итак, в случае, когда невозмущенной задачей является синодическая задача Кеплера, то уже первое приближение нормальной формы гамильтониана~\eqref{eq:Keplerperturbed} позволяет выделить два типа счетного числа однопараметрических семейств порождающих решений.
+
+\begin{remark}
+Семейства круговых прямых $\mathcal I_d$ и обратных $\mathcal I_r$ орбит тоже являются порождающими для возмущения задачи Хилла, но требуют отдельного исследования.  
+\end{remark}
+
+\section*{Заключение}
+\addcontentsline{toc}{section}{Заключение}
+Порождающие решения синодической кеплеровой задачи найдены с использованием первого приближения нормальной формы гамильтониана~\eqref{eq:Keplerperturbed}. Следует ожидать, что следующие приближения нормальной формы гамильтониана позволят найти порождающие решения, удовлетворяющие условию $p+q>2$.
+
+Надо отметить, что найденные порождающие решения синодической кеплеровой задачи это только первый шаг на пути поиска новых семейств периодических решений задачи. Эти решения необходимо продолжить по параметру $\varepsilon$ до значения 1.
+
+\addcontentsline{toc}{section}{Список литературы}
+%\renewcommand*{\newunitpunct}{\addperiod\space}
+\renewcommand*{\newblockpunct}{%
+    \addperiod\space\bibsentence}%block punct.,\bibsentence is for vol,etc.
+\hypertarget{bibliolist}{}\printbibliography
+
+
+\end{document}
